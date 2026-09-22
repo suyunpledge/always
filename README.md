@@ -1,18 +1,18 @@
 # always
 
-**A personal AI workbench that runs in the browser — and, through this repo's Android shell, as a native app.**
+**A self-hosted AI workbench for the browser, with a lightweight Android WebView shell.**
 
-> This repository holds only the Android WebView shell. The platform it wraps, **always**, is a separate Next.js web application; the shell is the thin native container that puts it on Android. Below: what the platform is first, then how the shell is built.
+> This repository contains only the native Android shell. The **always** platform is a separate Next.js application; this project packages it as a minimal WebView container. The README first describes the platform, then documents the shell. [中文文档](README.zh.md)
 
 ## What is always
 
-always bundles the AI tools you'd otherwise spread across half a dozen tabs into one place: multi-model chat, web search, code generation, image creation, and long-form writing. It's a web app (installable as a PWA), so the same session follows you from desktop browser to phone to the Android shell.
+always consolidates multi-model chat, web search, code generation, image creation, and long-form writing in one workspace. It is a PWA, so a single session can move from a desktop browser to a phone or the Android shell.
 
 Tagline, straight from the app: *multi-model chat, web search, code generation, and image creation — all in one place.*
 
 ### Three work modes
 
-The app is organized around three modes, each with its own layout and tooling rather than one chat box wearing different hats:
+The application provides three purpose-built work modes, each with its own layout and toolset:
 
 | Mode | What it's for | Highlights |
 | --- | --- | --- |
