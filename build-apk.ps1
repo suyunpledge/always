@@ -4,8 +4,8 @@
 $ErrorActionPreference = 'Stop'
 
 # ── 按本机环境调整以下三个路径 ──
-$sdk   = "$env:LOCALAPPDATA\Android\Sdk"            # Android SDK 根目录
-$jdk   = "$env:JAVA_HOME"                            # JDK 17 根目录
+$sdk   = if ($env:AIP_ANDROID_SDK) { $env:AIP_ANDROID_SDK } else { "$env:LOCALAPPDATA\Android\Sdk" }            # Android SDK 根目录
+$jdk   = if ($env:AIP_JDK) { $env:AIP_JDK } else { "$env:JAVA_HOME" }                            # JDK 17 根目录
 # ────────────────────────────────────────────────
 
 $bt    = "$sdk\build-tools\34.0.0"
@@ -14,9 +14,12 @@ $proj  = $PSScriptRoot
 $env:JAVA_HOME = $jdk
 $env:PATH = "$jdk\bin;$env:PATH"
 
-# 签名密钥（不随仓库分发；首次构建自动生成）
-$ksPass  = 'always2026'
-$ksAlias = 'always'
+# 签名密钥（不随仓库分发；首次构建自动生成）。
+# 复用已有密钥（例如覆盖升级自己的旧 APK）时用环境变量指定：
+#   AIP_KEYSTORE / AIP_KEYSTORE_PASS / AIP_KEYSTORE_ALIAS
+$ks      = if ($env:AIP_KEYSTORE)       { $env:AIP_KEYSTORE }       else { "$proj\always.keystore" }
+$ksPass  = if ($env:AIP_KEYSTORE_PASS)  { $env:AIP_KEYSTORE_PASS }  else { 'always2026' }
+$ksAlias = if ($env:AIP_KEYSTORE_ALIAS) { $env:AIP_KEYSTORE_ALIAS } else { 'always' }
 
 Write-Host '== [0] icons =='
 & python "$proj\make_icons.py"
@@ -53,7 +56,6 @@ $outApk = "$proj\build\always-unsigned-aligned.apk"
 if ($LASTEXITCODE -ne 0) { throw 'zipalign failed' }
 
 Write-Host '== [6] keystore + sign =='
-$ks = "$proj\always.keystore"
 if (-not (Test-Path $ks)) {
   & "$jdk\bin\keytool.exe" -genkeypair -keystore $ks -storepass $ksPass -keypass $ksPass `
     -alias $ksAlias -keyalg RSA -keysize 2048 -validity 10000 `
