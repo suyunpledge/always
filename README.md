@@ -59,7 +59,9 @@ Dependencies: JDK 17, Android SDK (build-tools 34 + platform android-34), Python
 3. Build: run `.\build-apk.ps1` in PowerShell
    (manual chain: `aapt2 compile/link → javac → d8 → zipalign → apksigner`, output goes to `..\always.apk` outside the repo)
 
-Adjust the `SDK / PLATFORM / JDK` paths at the top of the script to match your local setup. The signing key is not shipped with the repo; the script will auto-generate one on first build (storepass/keypass are in the script's constants) — **keep your own keystore safe and never commit it**.
+Script paths and the keystore are env-overridable: `AIP_ANDROID_SDK` / `AIP_JDK` (SDK and JDK), plus `AIP_KEYSTORE` / `AIP_KEYSTORE_PASS` / `AIP_KEYSTORE_ALIAS` (signing key). The version lives in `AndroidManifest.xml` (`versionCode` / `versionName`) and **must be bumped before every release**.
+
+`AIP_KEYSTORE_PASS` is **required** — the script has no built-in default and exits with an error if it is unset. The signing key is not shipped with the repo; the script auto-generates one on first build. **Keep your own keystore safe and never commit it.**
 
 ### Security Notes
 

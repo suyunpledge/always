@@ -59,7 +59,9 @@ always 是按自托管设计的。Web 应用跑在纯 Node（`server.js`）后�
 3. 构建：PowerShell 里运行 `.\build-apk.ps1`
    （手工链：`aapt2 compile/link → javac → d8 → zipalign → apksigner`，产物输出到仓库外 `..\always.apk`）
 
-脚本顶部的 `SDK / PLATFORM / JDK` 三个路径按本机位置调整；签名密钥不随仓库分发，首次构建时脚本会自动生成（storepass/keypass 见脚本内常量），**请自行保管好自己的 keystore**，切勿提交。
+脚本路径与签名密钥均可用环境变量覆盖：`AIP_ANDROID_SDK` / `AIP_JDK`（SDK 与 JDK），以及 `AIP_KEYSTORE` / `AIP_KEYSTORE_PASS` / `AIP_KEYSTORE_ALIAS`（签名密钥）；版本号在 `AndroidManifest.xml` 的 `versionCode` / `versionName`，**每次分发前务必递增**。
+
+`AIP_KEYSTORE_PASS` 为**必填**——脚本内不再有默认口令，未设置会直接报错退出。签名密钥不随仓库分发，首次构建时脚本会自动生成。**请自行保管好自己的 keystore**，切勿提交。
 
 ### 安全说明
 

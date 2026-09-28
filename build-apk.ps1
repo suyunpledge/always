@@ -15,11 +15,15 @@ $env:JAVA_HOME = $jdk
 $env:PATH = "$jdk\bin;$env:PATH"
 
 # 签名密钥（不随仓库分发；首次构建自动生成）。
-# 复用已有密钥（例如覆盖升级自己的旧 APK）时用环境变量指定：
-#   AIP_KEYSTORE / AIP_KEYSTORE_PASS / AIP_KEYSTORE_ALIAS
+# 口令必须由环境变量提供——脚本里不再有硬编码默认值：
+#   $env:AIP_KEYSTORE_PASS = '<你的口令>'
+# 其余可选：AIP_KEYSTORE（密钥文件路径）/ AIP_KEYSTORE_ALIAS（别名）
 $ks      = if ($env:AIP_KEYSTORE)       { $env:AIP_KEYSTORE }       else { "$proj\always.keystore" }
-$ksPass  = if ($env:AIP_KEYSTORE_PASS)  { $env:AIP_KEYSTORE_PASS }  else { 'always2026' }
 $ksAlias = if ($env:AIP_KEYSTORE_ALIAS) { $env:AIP_KEYSTORE_ALIAS } else { 'always' }
+if (-not $env:AIP_KEYSTORE_PASS) {
+    throw 'AIP_KEYSTORE_PASS 未设置：签名口令不再有默认值，请先 $env:AIP_KEYSTORE_PASS = "<口令>" 再构建。'
+}
+$ksPass = $env:AIP_KEYSTORE_PASS
 
 Write-Host '== [0] icons =='
 & python "$proj\make_icons.py"
