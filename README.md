@@ -2,6 +2,9 @@
 
 **A self-hosted AI workbench for the browser, with a lightweight Android WebView shell.**
 
+[![Java 17](https://img.shields.io/badge/Java-17-ED8B00?logo=openjdk&logoColor=white)](https://openjdk.org/)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+
 > This repository contains only the native Android shell. The **always** platform is a separate Next.js application; this project packages it as a minimal WebView container. The README first describes the platform, then documents the shell. [中文文档](README.zh.md)
 
 ## What is always
@@ -93,3 +96,7 @@ This code is a **personal-use / demo** shell with an intentionally simple securi
 
 1. Backend HTTPS (domain or self-signed + certificate pinning)
 2. Already implemented server-side: multi-user data isolation, forced auth in public mode, generated images no longer served unauthenticated (see the server-side private repo)
+
+## License
+
+The Android WebView shell in this repository is available under the [MIT](LICENSE) license.

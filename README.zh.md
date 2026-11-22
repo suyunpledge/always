@@ -2,6 +2,9 @@
 
 **一个跑在浏览器里的个人 AI 工作台 —— 通过本仓库的安卓壳，也可以作为原生 App 使用。**
 
+[![Java 17](https://img.shields.io/badge/Java-17-ED8B00?logo=openjdk&logoColor=white)](https://openjdk.org/)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+
 > 本仓库只包含安卓 WebView 壳。它所包装的平台 **always** 是一个独立的 Next.js Web 应用；壳只是把它送上安卓的薄封装。下面先讲平台是什么，再讲壳怎么构建。
 
 ## always 是什么
@@ -92,3 +95,7 @@ build-apk.ps1                            一键构建脚本
 
 1. 后端 HTTPS（域名或自签 + 证书锁定）
 2. 服务端已具备：多用户数据隔离、公开模式强制鉴权、生成图不裸奔（见服务端私有仓库）
+
+## 许可证
+
+本仓库的 Android WebView 壳采用 [MIT](LICENSE) 许可证。
